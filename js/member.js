@@ -2,8 +2,7 @@ var member = [
   {
     "phone": "No.1",
     "name": "张力"
-  },
-      {
+  },{
     "phone": "No.2",
     "name": "梁行"
   },      {
@@ -32,7 +31,7 @@ var member = [
     "name": "崔银山"
   },      {
     "phone": "No.11",
-    "name": "郭伟"
+    "name": "户亚坡"
   },      {
     "phone": "No.12",
     "name": "王先冉"
@@ -86,12 +85,9 @@ var member = [
     "name": "王加明"
   },      {
     "phone": "No.29",
-    "name": "李景惠"
+    "name": "李景慧"
   },      {
     "phone": "No.30",
     "name": "刘金龙"
-  },      {
-    "phone": "No.31",
-    "name": "户亚坡"
-  },
+  }
 ]
