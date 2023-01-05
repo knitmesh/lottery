@@ -28,7 +28,7 @@ var member = [
     "name": "张记"
   },      {
     "phone": "No.10",
-    "name": "崔银山"
+    "name": "李景慧"
   },      {
     "phone": "No.11",
     "name": "户亚坡"
@@ -83,8 +83,5 @@ var member = [
   },      {
     "phone": "No.28",
     "name": "王加明"
-  },      {
-    "phone": "No.29",
-    "name": "李景慧"
   }
 ]
