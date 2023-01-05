@@ -79,9 +79,6 @@ var member = [
     "name": "洪子璇"
   },      {
     "phone": "No.27",
-    "name": "司同"
-  },      {
-    "phone": "No.28",
     "name": "王加明"
   }
 ]
