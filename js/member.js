@@ -67,15 +67,12 @@ var member = [
     "name": "于光远"
   },      {
     "phone": "No.23",
-    "name": "蔡常旺"
+    "name": "洪子璇"
   },      {
     "phone": "No.24",
     "name": "王加明"
   },      {
     "phone": "No.25",
     "name": "徐昆"
-  },      {
-    "phone": "No.26",
-    "name": "洪子璇"
   }
 ]
