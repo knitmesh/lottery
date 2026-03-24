@@ -4,7 +4,7 @@
     <meta name="screen-orientation" content="portrait">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
-    <title>年会抽奖小程序</title>
+    <title>取名</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/wall.css">
     <style type="text/css">
@@ -14,25 +14,124 @@
         }
         .result {
             position: absolute;
-            height: 320px;
             width: 100%;
-            left: 0; top: 50%;
-            margin-top: -160px;
+            left: 0; top: 35%;
+            transform: translateY(-50%);
             text-align: center;
             padding: 10px;
             display: none;
+            z-index: 100;
         }
-        .result span {
+        .result-name {
+            font-size: 56px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 
+                0 0 10px rgba(0, 212, 255, 1),
+                0 0 20px rgba(0, 212, 255, 0.8),
+                0 0 40px rgba(0, 212, 255, 0.6),
+                0 0 80px rgba(0, 212, 255, 0.4);
+            margin-bottom: 30px;
+            animation: resultGlow 2s ease-in-out infinite;
+            letter-spacing: 8px;
+        }
+        .result-name::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: scanLine 2s linear infinite;
+        }
+        .result-name::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+        }
+        .result-desc {
+            position: relative;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(135deg, rgba(0, 20, 40, 0.8), rgba(0, 40, 80, 0.6));
+            padding: 20px 30px;
+            border-radius: 15px;
             display: inline-block;
-            font-size: 25px;
-            width: 150px;
-            background: #fff;
-            line-height: 30px;
-            color: #000;
-            margin: 5px;
-            border-radius: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-            padding: 10px 0;
+            max-width: 80%;
+            line-height: 1.8;
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            box-shadow: 
+                0 0 20px rgba(0, 212, 255, 0.3),
+                inset 0 0 30px rgba(0, 212, 255, 0.1);
+        }
+        .result-desc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.1) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: shimmer 3s linear infinite;
+            pointer-events: none;
+        }
+        .hologram-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .hologram-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+            animation: hologramScan 3s linear infinite;
+        }
+        .hologram-line:nth-child(1) { top: 15%; animation-delay: 0s; }
+        .hologram-line:nth-child(2) { top: 30%; animation-delay: 0.5s; }
+        .hologram-line:nth-child(3) { top: 45%; animation-delay: 1s; }
+        .hologram-line:nth-child(4) { top: 60%; animation-delay: 1.5s; }
+        @keyframes resultGlow {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 10px rgba(0, 212, 255, 1),
+                    0 0 20px rgba(0, 212, 255, 0.8),
+                    0 0 40px rgba(0, 212, 255, 0.6),
+                    0 0 80px rgba(0, 212, 255, 0.4);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 15px rgba(0, 212, 255, 1),
+                    0 0 30px rgba(0, 212, 255, 0.8),
+                    0 0 60px rgba(0, 212, 255, 0.6),
+                    0 0 100px rgba(0, 212, 255, 0.4);
+            }
+        }
+        @keyframes scanLine {
+            0% { transform: translateX(-50%) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(50%) rotate(0deg); opacity: 0; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes hologramScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         button, input, optgroup, select, textarea {
             color: inherit;
@@ -82,44 +181,259 @@
         .pure-button:focus {
             outline: 0
         }
-        .pure-button-hover, .pure-button:hover, .pure-button:focus {
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000', GradientType=0);
-            background-image: -webkit-gradient(linear,0 0,0 100%,from(transparent),color-stop(40%,rgba(0,0,0,.05)),to(rgba(0,0,0,.1)));
-            background-image: -webkit-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));
-            background-image: -moz-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,.1));
-            background-image: -o-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));
-            background-image: linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));
-        }
 
-        .button-success, .button-error, .button-warning, .button-secondary {
+        .button-success, .button-secondary {
             color: white;
-            border-radius: 4px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
         .button-success {
-            background: rgb(28, 184, 65);
-        }
-        .button-error {
-            background: rgb(202, 60, 60);
-        }
-        .button-warning {
-            background: rgb(223, 117, 20);
+            background: linear-gradient(135deg, #ff6b6b, #ff4757, #ff3838);
         }
         .button-secondary {
-            background: rgb(66, 184, 221);
+            background: linear-gradient(135deg, #00d4ff, #0099ff, #0066ff);
         }
         .tools {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
         }
-        .tools .pure-button {
+        .tools .toggle-btn {
+            position: relative;
+            font-size: 22px;
+            padding: 0;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            font-weight: bold;
+            border: none;
+            background: linear-gradient(135deg, #00d4ff, #0099ff, #0066ff);
+            box-shadow: 
+                0 0 30px rgba(0, 212, 255, 0.7),
+                0 0 60px rgba(0, 153, 255, 0.5),
+                0 0 90px rgba(0, 102, 255, 0.3),
+                inset 0 0 40px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+            letter-spacing: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            overflow: visible;
+            transition: all 0.3s ease;
+            animation: btnFloat 3s ease-in-out infinite, btnGlow 2s ease-in-out infinite;
+        }
+        .tools .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, #00d4ff, #00ff88, #00d4ff, #0099ff, #00ff88, #00d4ff);
+            background-size: 600% 600%;
+            border-radius: 50%;
+            z-index: -1;
+            animation: gradientBorder 2s ease infinite;
+            filter: blur(2px);
+        }
+        .tools .toggle-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation: scanLine 2s linear infinite;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .tools .toggle-btn.button-success {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757, #ff3838);
+            box-shadow: 
+                0 0 30px rgba(255, 107, 107, 0.7),
+                0 0 60px rgba(255, 71, 87, 0.5),
+                0 0 90px rgba(255, 56, 56, 0.3),
+                inset 0 0 40px rgba(255, 255, 255, 0.2);
+        }
+        .tools .toggle-btn.button-success::before {
+            background: linear-gradient(45deg, #ff6b6b, #ffa502, #ff6b6b, #ff4757, #ffa502, #ff6b6b);
+        }
+        .tools .toggle-btn .btn-icon {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
+            animation: iconPulse 1s ease-in-out infinite;
+        }
+        .tools .toggle-btn .btn-text {
+            position: relative;
+            z-index: 1;
+        }
+        .toggle-btn-wrapper {
+            position: relative;
             display: inline-block;
-            margin: 5px;
-            padding: 10px 0;
-            text-align: center;
-            width:50px;
+        }
+        .toggle-btn-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            border: 2px solid rgba(0, 212, 255, 0.5);
+            border-radius: 50%;
+            animation: haloRotate 4s linear infinite, haloPulse 2s ease-in-out infinite;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+        .toggle-btn-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            right: -40px;
+            bottom: -40px;
+            border: 1px dashed rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            animation: haloRotate 6s linear infinite reverse, haloPulse 2s ease-in-out infinite 0.5s;
+            pointer-events: none;
+        }
+        .energy-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: rgba(0, 212, 255, 0.6);
+            border-right-color: rgba(0, 212, 255, 0.4);
+            animation: energyRing 1.5s linear infinite;
+            pointer-events: none;
+        }
+        .energy-ring:nth-child(2) {
+            width: 220px;
+            height: 220px;
+            animation-delay: -0.5s;
+            animation-duration: 2s;
+            border-top-color: rgba(0, 255, 136, 0.5);
+        }
+        .energy-ring:nth-child(3) {
+            width: 240px;
+            height: 240px;
+            animation-delay: -1s;
+            animation-duration: 2.5s;
+            border-top-color: rgba(0, 212, 255, 0.4);
+        }
+        .particle-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 280px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .particle-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #00d4ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+            animation: particleOrbit 4s linear infinite;
+        }
+        .particle-dot:nth-child(1) { animation-delay: 0s; }
+        .particle-dot:nth-child(2) { animation-delay: -0.5s; }
+        .particle-dot:nth-child(3) { animation-delay: -1s; }
+        .particle-dot:nth-child(4) { animation-delay: -1.5s; }
+        .particle-dot:nth-child(5) { animation-delay: -2s; }
+        .particle-dot:nth-child(6) { animation-delay: -2.5s; }
+        .particle-dot:nth-child(7) { animation-delay: -3s; }
+        .particle-dot:nth-child(8) { animation-delay: -3.5s; }
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes haloRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes haloPulse {
+            0%, 100% { opacity: 0.5; transform: rotate(0deg) scale(1); }
+            50% { opacity: 1; transform: rotate(180deg) scale(1.05); }
+        }
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 0 30px rgba(255, 107, 107, 0.7),
+                    0 0 60px rgba(255, 71, 87, 0.5),
+                    0 0 90px rgba(255, 56, 56, 0.3);
+            }
+            50% { 
+                transform: scale(1.03);
+                box-shadow: 
+                    0 0 40px rgba(255, 107, 107, 0.9),
+                    0 0 80px rgba(255, 71, 87, 0.7),
+                    0 0 120px rgba(255, 56, 56, 0.5);
+            }
+        }
+        @keyframes btnFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes btnGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        @keyframes energyRing {
+            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.6; }
+        }
+        @keyframes particleOrbit {
+            0% { 
+                transform: rotate(0deg) translateX(140px) rotate(0deg);
+                opacity: 0.3;
+            }
+            25% { opacity: 1; }
+            50% { opacity: 0.5; }
+            75% { opacity: 1; }
+            100% { 
+                transform: rotate(360deg) translateX(140px) rotate(-360deg);
+                opacity: 0.3;
+            }
+        }
+        .tools .toggle-btn:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 
+                0 0 40px rgba(0, 212, 255, 0.9),
+                0 0 80px rgba(0, 153, 255, 0.7),
+                0 0 120px rgba(0, 102, 255, 0.5);
+        }
+        .tools .toggle-btn.button-success {
+            animation: pulse 1.5s ease-in-out infinite, btnFloat 3s ease-in-out infinite;
+        }
+        .tools .toggle-btn.button-success:hover {
+            box-shadow: 
+                0 0 40px rgba(255, 107, 107, 0.9),
+                0 0 80px rgba(255, 71, 87, 0.7),
+                0 0 120px rgba(255, 56, 56, 0.5);
+        }
+        .tools .toggle-btn:active {
+            transform: scale(0.95);
         }
         .mask {
             -webkit-filter:blur(5px);
@@ -129,36 +443,39 @@
             -webkit-transition: all 1s;
             transition: all 1s;
         }
-        .result-btn {
-            margin-top: 20px;
-            text-align: right;
-            margin-right: 30px;
-            text-decoration: none;
-            color: white;
-        }
     </style>
 </head>
 <body>
-<div id="main" class="wall">
-    <div class="result-btn">
-       <a href="./result.html" target="_blank">获奖名单</a>
-    </div>
-</div>
-<div id="result" class="result">
-</div>
+<div id="main" class="wall"></div>
+<div id="result" class="result"></div>
 <div id="tools" class="tools">
-     <button
-        v-for="value in btns"
-        @click="onClick(value)"
-        class="pure-button"
-        :class="{ 'button-error': selected == value}"
-       >{{value}}</button>
-    <button
-       class="pure-button"
-       @click="toggle"
-       :class="{'button-secondary': !running,
-               'button-success': running}">{{running?'停!':'开始'}}</button>
-    <button class="pure-button button-warning" @click="reset">重置</button>
+    <div class="toggle-btn-wrapper">
+        <div class="energy-ring"></div>
+        <div class="energy-ring"></div>
+        <div class="energy-ring"></div>
+        <div class="particle-ring">
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+        </div>
+        <button
+           class="pure-button toggle-btn"
+           @click="toggle"
+           :class="{'button-secondary': !running, 'button-success': running}">
+           <svg v-if="!running" class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+             <path d="M8 5v14l11-7z"/>
+           </svg>
+           <svg v-else class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+             <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+           </svg>
+           <span class="btn-text">{{running?'停止':'抽取'}}</span>
+        </button>
+    </div>
 </div>
 <script type="text/javascript" src="js/zepto.js"></script>
 <script type="text/javascript" src="js/vue.js"></script>
@@ -166,33 +483,22 @@
 <script type="text/javascript" src="js/member.js"></script>
 <script type="text/javascript">
     (function(){
-        var choosed = JSON.parse(localStorage.getItem('choosed')) || {};
-        console.log(choosed);
         var speed = function(){
             return [0.1 * Math.random() + 0.01, -(0.1 * Math.random() + 0.01)];
-        };
-        var getKey = function(item){
-            return item.name + '-' + item.phone;
         };
         var createHTML = function(){
             var html = [ '<ul>' ];
             member.forEach(function(item, index){
                 item.index = index;
-                var key = getKey(item);
-                var color = choosed[key] ? 'yellow' : 'white';
-                html.push('<li><a href="#" style="color: ' + color + ';">' + item.name + '</a></li>');
+                html.push('<li><a href="#" style="color: white;">' + item.name + '</a></li>');
             });
             html.push('</ul>');
             return html.join('');
         };
-        var lottery = function(count){
+        var lottery = function(){
             var list = canvas.getElementsByTagName('a');
             var color = 'yellow';
             var ret = member
-                .filter(function(m, index){
-                    m.index = index;
-                    return !choosed[getKey(m)];
-                })
                 .map(function(m){
                     return Object.assign({
                       score: Math.random()
@@ -201,13 +507,11 @@
                 .sort(function(a, b){
                     return a.score - b.score;
                 })
-                .slice(0, count)
+                .slice(0, 1)
                 .map(function(m){
-                  choosed[getKey(m)] = 1;
                   list[m.index].style.color = color;
-                  return m.name + '<br/>' + m.phone; 
+                  return '<div class="hologram-effect"><div class="hologram-line"></div><div class="hologram-line"></div><div class="hologram-line"></div><div class="hologram-line"></div></div><div class="result-name">' + m.name + '</div><div class="result-desc">寓意: ' + m.description + '</div>'; 
                 });
-            localStorage.setItem('choosed', JSON.stringify(choosed));
             return ret;
         };
         var canvas = document.createElement('canvas');
@@ -218,11 +522,7 @@
         new Vue({
             el: '#tools',
             data: {
-                selected: 3,
-                running: false,
-                btns: [
-                    4, 3
-                ]
+                running: false
             },
             mounted () {
                 canvas.innerHTML = createHTML();
@@ -234,29 +534,13 @@
                 });
             },
             methods: {
-                reset: function(){
-                    if(confirm('确定要重置么？所有之前的抽奖历史将被清除！')){
-                        localStorage.clear();
-                        location.reload(true);
-                    }
-                },
-                onClick: function(num){
-                    $('#result').css('display', 'none');
-                    $('#main').removeClass('mask');
-                    this.selected = num;
-                },
                 toggle: function(){
                     if(this.running){
                         TagCanvas.SetSpeed('myCanvas', speed());
-                        var ret = lottery(this.selected);
-                        if (ret.length === 0) {
-                            $('#result').css('display', 'block').html('<span>已抽完</span>');
-                            return
-                        }
-                        $('#result').css('display', 'block').html('<span>' + ret.join('</span><span>') + '</span>');
+                        var ret = lottery();
+                        $('#result').css('display', 'block').html(ret.join(''));
                         TagCanvas.Reload('myCanvas');
                         setTimeout(function(){
-                            localStorage.setItem(new Date().toString(), JSON.stringify(ret));
                             $('#main').addClass('mask');
                         }, 300);
                     } else {
